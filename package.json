@@ -1,0 +1,41 @@
+{
+  "name": "laxative",
+  "version": "0.1.0",
+  "description": "💊 One config, whole stack: laxative conducts poops (frontend) and septic (backend) into a single MVP.",
+  "type": "module",
+  "bin": {
+    "laxative": "bin/laxative.js",
+    "💊": "bin/laxative.js"
+  },
+  "main": "lib/laxative.js",
+  "exports": {
+    ".": "./lib/laxative.js"
+  },
+  "files": ["lib", "bin", "README.md", "LICENSE"],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node bin/laxative.js dev",
+    "serve": "node bin/laxative.js serve",
+    "test": "node --test",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "septic": "github:stamat/septic"
+  },
+  "peerDependencies": {
+    "poops": "*"
+  },
+  "peerDependenciesMeta": {
+    "poops": { "optional": true }
+  },
+  "devDependencies": {
+    "eslint": "^9.39.3",
+    "neostandard": "^0.13.0"
+  },
+  "keywords": ["poops", "septic", "full-stack", "mvp", "config-driven"],
+  "license": "MIT",
+  "author": "Stamat <@stamat> (http://stamat.info)"
+}
