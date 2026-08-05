@@ -16,12 +16,16 @@ They already share `poops.json`. What was missing: running them as **one thing**
 ## Use
 
 ```sh
-npm i septic && npm i -D poops laxative
+npm i -D poops stamat/laxative
 laxative init      # scaffold poops.json (poops + septic + a form) + a starter page
 laxative dev       # build once, then serve site + /api on one origin, rebuild on change
 laxative build     # septic build (DB → markup + forms) → poops compile → dist/
 laxative serve     # production: serve dist/ + /api + /uploads from one process
 ```
+
+septic comes along as laxative's own dependency — you never install it separately. Neither is on npm yet (tags cut a GitHub Release; an npm trusted publisher is pending), so both install from git. poops is an optional peer you install yourself; `PORT` overrides the default 3000.
+
+Full reference: [stamat.info/laxative](https://stamat.info/laxative/).
 
 ## The one-origin server
 

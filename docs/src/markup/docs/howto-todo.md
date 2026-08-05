@@ -13,7 +13,7 @@ A complete todo app: a static page that lists, adds and toggles todos, backed by
 
 ```sh
 mkdir todo && cd todo && npm init -y
-npm i septic && npm i -D poops laxative poops-docs-theme
+npm i -D poops stamat/laxative
 ```
 
 ## 2. One config
@@ -94,7 +94,7 @@ That's the entire backend: a `todos` table, `/api/todos` CRUD, and a generated a
 </html>
 ```
 
-> Prefer no JavaScript? `septic build` also emits `src/markup/_partials/todos-form.html` — a real `<form>` that POSTs to `/api/todos` and works without a line of client code. Include it with {% raw %}`{% include "todos-form.html" %}`{% endraw %} (add `_partials` to `includePaths`). See [septic's how-to](https://stamat.info/septic/docs/howto-todo/).
+> Prefer no JavaScript? `septic build` also emits `src/markup/_partials/todos-form.html` — a real `<form>` that POSTs to `/api/todos` and works without a line of client code. Include it with {% raw %}`{% include "todos-form.html" %}`{% endraw %} (add `_partials` to `includePaths`). See [septic's how-to](https://stamat.info/septic/docs/howto-todo).
 
 ## 4. Run it
 

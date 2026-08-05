@@ -7,12 +7,15 @@ order: 1
 
 # Overview
 
-You already have the organs:
+You already have the organs, and they already read one `poops.json`:
 
-- **[poops](https://github.com/stamat/poops)** — the bundler + static-site generator.
-- **[septic](https://github.com/stamat/septic)** — config → SQLite + REST API + generated forms + the poops build bridge.
+| Organ | Its job | You reach for it when |
+|-------|---------|-----------------------|
+| [poops](https://stamat.info/poops) | bundler + static-site generator | you have pages to compile |
+| [septic](https://stamat.info/septic) | schema, REST API, generated forms, the build bridge | those pages need data |
+| **laxative** | conductor — runs both on **one origin** | a form on the built page must POST to `/api` on the host that served it |
 
-They already share `poops.json`. What was missing: running them as **one thing** — the API and the static site on the same host, so a generated `<form>` POSTs to `/api` on the origin that served the page. That's laxative.
+What was missing is that last row: running them as **one thing**, on the same host, so a generated `<form>` POSTs to `/api` on the origin that served the page. That's laxative — and it is the only piece of the three that isn't also useful alone.
 
 ## Not an engine
 

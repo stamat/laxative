@@ -13,7 +13,7 @@ Write posts in a form, publish a static site — the whole loop from one `poops.
 
 ```sh
 mkdir blog && cd blog && npm init -y
-npm i septic && npm i -D poops laxative poops-docs-theme
+npm i -D poops stamat/laxative
 ```
 
 ## 2. One config
@@ -105,3 +105,5 @@ Deploy `dist/` anywhere — it's plain HTML. Keep `laxative serve` running where
 ## The loop
 
 Write in a form → it's a draft row → flip to published → `laxative build` → a static page. Content in a database, a static site out, an author form in between — one config.
+
+The backend half alone — schema, the `where` filter, the generated form, no app around it — is [septic's version of this how-to](https://stamat.info/septic/docs/howto-blog).
