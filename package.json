@@ -11,7 +11,12 @@
   "exports": {
     ".": "./lib/laxative.js"
   },
-  "files": ["lib", "bin", "README.md", "LICENSE"],
+  "files": [
+    "lib",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
   "engines": {
     "node": ">=22"
   },
@@ -31,7 +36,9 @@
     "poops": "*"
   },
   "peerDependenciesMeta": {
-    "poops": { "optional": true }
+    "poops": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "eslint": "^9.39.3",
@@ -39,7 +46,13 @@
     "poops": "^2.0.0",
     "poops-docs-theme": "^2.0.0"
   },
-  "keywords": ["poops", "septic", "full-stack", "mvp", "config-driven"],
+  "keywords": [
+    "poops",
+    "septic",
+    "full-stack",
+    "mvp",
+    "config-driven"
+  ],
   "license": "MIT",
   "author": "Stamat <@stamat> (http://stamat.info)"
 }

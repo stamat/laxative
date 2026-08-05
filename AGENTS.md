@@ -6,11 +6,14 @@ into one MVP. **It is a conductor, not an engine — it reimplements nothing.**
 ## Commands
 
 ```bash
-npm install       # installs septic (git dep) + express
-npm run dev       # laxative dev — build once, serve site + /api on one origin, watch
-npm test          # node --test
-npm run lint      # neostandard
+script/bootstrap  # npm ci, from a fresh clone — pulls septic (git dep) + express
+script/test       # node --test
+script/lint       # neostandard (the authority; CI runs it)
 ```
+
+There is no `script/server`: the repo has no `poops.json` to conduct. To run it
+for real, scaffold a project elsewhere and install this checkout into it —
+CONTRIBUTING.md has the four lines.
 
 ## Layout
 
@@ -30,9 +33,10 @@ npm run lint      # neostandard
 
 ## Non-obvious
 
-- `septic` is a **git dependency** (`github:stamat/septic`); `npm install`, not
-  `npm ci`, in CI (git-dep lockfiles are finicky). It pulls septic's native deps
-  (better-sqlite3, sharp).
+- `septic` is a **git dependency** (`github:stamat/septic`), pinned in the
+  lockfile by commit — so a septic fix does not reach laxative until the
+  lockfile is refreshed, and `npm ci` is what CI runs (it resolves the git dep
+  fine, checked). It pulls septic's native deps: better-sqlite3 and sharp.
 - The one-origin trick: `createServer(config.septic)` returns an Express app with
   `/api` + `/uploads` already mounted; laxative just adds `express.static(outDir)`
   behind it, so unmatched routes fall through to the poops-built site.

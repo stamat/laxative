@@ -6,6 +6,16 @@ All notable changes to laxative are recorded here. [Keep a Changelog](https://ke
 
 ### Added
 
+- The files an open project owes the people who show up: `CONTRIBUTING.md`
+  (including what laxative refuses to become — if poops or septic could do it,
+  it belongs there), `CODE_OF_CONDUCT.md`, `SECURITY.md`, issue forms and a pull
+  request template.
+- `script/bootstrap`, `script/test`, `script/lint` — the same three entry points
+  every repo here answers to, and what CI now runs. There is deliberately no
+  `script/server`: this repo has no `poops.json` to conduct.
+- `.github/workflows/publish.yml` — a `v*` tag now cuts a GitHub Release with the
+  changelog section as its body. npm publishing stays gated on the
+  `NPM_PUBLISH` repository variable until a trusted publisher exists.
 - Docs site (`docs/`, poops + poops-docs-theme) deployed to GitHub Pages via
   `.github/workflows/pages.yml`.
 - The docs now say what laxative actually reads and does: the three config keys
@@ -28,6 +38,12 @@ All notable changes to laxative are recorded here. [Keep a Changelog](https://ke
   `laxative init` prints when it finishes.
 - The link to septic's how-to 404'd — those pages answer without a trailing
   slash.
+- The lockfile still pinned septic at 1.2.0 while the docs taught `where`, a
+  1.3.0 feature; refreshed to current septic. A fresh `npm i` always resolved
+  septic's `main`, so only this repo's own checkout and CI were behind.
+- `AGENTS.md` claimed CI must use `npm install` because "git-dep lockfiles are
+  finicky". `npm ci` resolves the git dependency fine — checked — so CI uses
+  `script/bootstrap` like every other repo here.
 
 ## [0.1.0] — the conductor
 
