@@ -4,6 +4,11 @@ All notable changes to laxative are recorded here. [Keep a Changelog](https://ke
 
 ## [Unreleased]
 
+### Added
+
+- Docs site (`docs/`, poops + poops-docs-theme) deployed to GitHub Pages via
+  `.github/workflows/pages.yml`.
+
 ## [0.1.0] — the conductor
 
 First cut: run poops + septic as one thing.

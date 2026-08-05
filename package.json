@@ -19,7 +19,9 @@
     "dev": "node bin/laxative.js dev",
     "serve": "node bin/laxative.js serve",
     "test": "node --test",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "docs:build": "poops --build -c docs/poops.json",
+    "docs:serve": "poops -c docs/poops.json"
   },
   "dependencies": {
     "express": "^4.21.0",
@@ -33,7 +35,9 @@
   },
   "devDependencies": {
     "eslint": "^9.39.3",
-    "neostandard": "^0.13.0"
+    "neostandard": "^0.13.0",
+    "poops": "^2.0.0",
+    "poops-docs-theme": "^2.0.0"
   },
   "keywords": ["poops", "septic", "full-stack", "mvp", "config-driven"],
   "license": "MIT",

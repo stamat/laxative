@@ -1,7 +1,7 @@
 import neostandard from 'neostandard'
 
 export default [
-  { ignores: ['node_modules/**', 'test/tmp-*/**'] },
+  { ignores: ['node_modules/**', 'docs/dist/**', 'test/tmp-*/**'] },
   ...neostandard(),
   {
     rules: {
