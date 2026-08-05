@@ -38,9 +38,10 @@ All notable changes to laxative are recorded here. [Keep a Changelog](https://ke
   `laxative init` prints when it finishes.
 - The link to septic's how-to 404'd — those pages answer without a trailing
   slash.
-- The lockfile still pinned septic at 1.2.0 while the docs taught `where`, a
-  1.3.0 feature; refreshed to current septic. A fresh `npm i` always resolved
-  septic's `main`, so only this repo's own checkout and CI were behind.
+- The lockfile pinned an older septic commit than the one whose features the
+  docs teach (the bridge's `where` filter); refreshed to septic 1.0.0. A fresh
+  `npm i` always resolved septic's `main`, so only this repo's own checkout and
+  CI were behind.
 - `AGENTS.md` claimed CI must use `npm install` because "git-dep lockfiles are
   finicky". `npm ci` resolves the git dependency fine — checked — so CI uses
   `script/bootstrap` like every other repo here.
@@ -58,4 +59,5 @@ First cut: run poops + septic as one thing.
 - `laxative init` — scaffolds a starter `poops.json` (poops + septic + a form) and a page.
 - Frontend-only projects (no `septic` block) are served as plain static.
 - `💊` bin alias.
-- Composes septic through its public API (`septic` ≥ 1.2.0); reimplements nothing.
+- Composes septic through its public API — the `septic` package's own exports,
+  never its `lib/*` paths; reimplements nothing.
