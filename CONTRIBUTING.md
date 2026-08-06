@@ -79,3 +79,9 @@ Publishing to npm is gated on the `NPM_PUBLISH` repository variable, which is
 not set yet: laxative installs from git for now (septic is on npm since 1.0.0).
 Set it to `true` once an npm trusted publisher exists for the package, and the
 same workflow starts publishing.
+
+The first npm release carries a doc chore with it: every install line flips
+from `npm i -D poops stamat/laxative` to `npm i -D poops laxative` — in the
+README, the docs site (index, quickstart, both how-tos), the line
+`laxative init` prints when it finishes, and the git-install note in
+AGENTS.md.
