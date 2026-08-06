@@ -1,6 +1,6 @@
 import { test, before, after } from 'node:test'
 import assert from 'node:assert/strict'
-import { mkdirSync, writeFileSync, rmSync, readFileSync } from 'node:fs'
+import { mkdirSync, writeFileSync, rmSync, readFileSync, existsSync } from 'node:fs'
 import path from 'node:path'
 import { load } from '../lib/config.js'
 import { createApp, init } from '../lib/laxative.js'
@@ -73,4 +73,25 @@ test('init scaffolds a poops.json with both frontend and backend', () => {
   const cfg = JSON.parse(readFileSync(path.join(dir, 'poops.json'), 'utf8'))
   assert.ok(cfg.markup && cfg.septic) // one config, both ends
   assert.ok(cfg.septic.build.forms.messages)
+})
+
+test('the scaffolded page includes the generated form, and the config makes that include resolve', () => {
+  const dir = path.join(PROJ, 'scaffold-form')
+  mkdirSync(dir, { recursive: true })
+  init(dir)
+  const cfg = JSON.parse(readFileSync(path.join(dir, 'poops.json'), 'utf8'))
+  const into = cfg.septic.build.forms.messages.into
+  const partial = path.basename(into)
+  assert.ok(cfg.markup.options?.includePaths?.includes(partial), `the form is written to ${into}, which is not on the include paths — the include cannot resolve`)
+  assert.match(readFileSync(path.join(dir, 'src/markup/index.html'), 'utf8'), /include "messages-form\.html"/, 'the scaffolded page never includes the form it scaffolds')
+})
+
+test('the scaffolded form has somewhere to land: success points at a page init writes', () => {
+  const dir = path.join(PROJ, 'scaffold-thanks')
+  mkdirSync(dir, { recursive: true })
+  init(dir)
+  const cfg = JSON.parse(readFileSync(path.join(dir, 'poops.json'), 'utf8'))
+  const success = cfg.septic.build.forms.messages.success
+  const page = path.join(dir, cfg.markup.in, success.replace(/^\//, '') + '.html')
+  assert.ok(existsSync(page), `a submit redirects to ${success}, and nothing scaffolds ${path.relative(dir, page)} — the happy path ends on a 404`)
 })

@@ -1,4 +1,4 @@
-# 💊 laxative
+# 💊 laxative [![npm version](https://img.shields.io/npm/v/laxative)](https://www.npmjs.com/package/laxative) [![ci](https://img.shields.io/github/actions/workflow/status/stamat/laxative/ci.yml?branch=main&label=ci)](https://github.com/stamat/laxative/actions/workflows/ci.yml) [![license mit](https://img.shields.io/badge/license-MIT-green)](https://github.com/stamat/laxative/blob/main/LICENSE)
 
 One config, whole stack. laxative conducts [poops](https://github.com/stamat/poops) (frontend) and [septic](https://github.com/stamat/septic) (backend) into a single MVP — from one `poops.json`.
 
@@ -17,7 +17,7 @@ They already share `poops.json`. What was missing: running them as **one thing**
 
 ```sh
 npm i -D poops stamat/laxative
-laxative init      # scaffold poops.json (poops + septic + a form) + a starter page
+laxative init      # scaffold poops.json (poops + septic + a form) + the page carrying it
 laxative dev       # build once, then serve site + /api on one origin, rebuild on change
 laxative build     # septic build (DB → markup + forms) → poops compile → dist/
 laxative serve     # production: serve dist/ + /api + /uploads from one process

@@ -11,7 +11,7 @@ order: 2
 mkdir my-app && cd my-app
 npm init -y
 npm i -D poops stamat/laxative
-npx laxative init      # writes poops.json (poops + septic + a form) + src/markup/index.html
+npx laxative init      # writes poops.json (poops + septic + a form) + the two pages the form needs
 npx laxative dev       # http://localhost:3000 — site + /api, one origin
 ```
 
@@ -19,9 +19,11 @@ npx laxative dev       # http://localhost:3000 — site + /api, one origin
 
 `laxative init` scaffolds a `poops.json` with:
 
-- a `markup` block (poops renders `src/markup` → `dist`),
+- a `markup` block (poops renders `src/markup` → `dist`), carrying `includePaths: ["_partials"]` so the page can include the generated form by name,
 - a `septic` block with a public `messages` resource,
-- a `build.forms` block that generates the `messages` form.
+- a `build.forms` block that generates the `messages` form and redirects a submit to `/thanks`.
+
+Alongside it come the two pages that make the form work end to end: `src/markup/index.html`, which includes the form with {% raw %}`{% include "messages-form.html" %}`{% endraw %}, and `src/markup/thanks.html`, where a submit lands.
 
 It refuses to touch an existing `poops.json` — run it in an empty directory, or write the blocks yourself.
 

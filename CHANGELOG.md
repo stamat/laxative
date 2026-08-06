@@ -38,6 +38,22 @@ All notable changes to laxative are recorded here. [Keep a Changelog](https://ke
 
 ### Fixed
 
+- **The scaffold never closed its own loop.** `laxative init` promised "define a
+  resource → get a working form on a page", then wrote a page with a comment
+  where the form should be — and the obvious fix, an `include` of
+  `messages-form.html`, failed with `Template not found`,
+  because septic writes the form into `_partials` and poops only searches a
+  directory it has been given as an include path. The scaffolded config now
+  carries `markup.options.includePaths: ["_partials"]` and the page includes the
+  form, so a first `init` → `dev` serves a page you can actually submit.
+- **The scaffolded form's success page didn't exist.** The config redirects a
+  submit to `/thanks`, and nothing wrote `/thanks` — so the happy path, HTMX and
+  no-JS alike, ended on a 404. `init` now scaffolds `src/markup/thanks.html`.
+- **A missing or malformed `poops.json` came out as a Node stack trace** about
+  `fs` internals, which is the most likely first-run mistake there is. A missing
+  one now names the file and points at `laxative init`; one that won't parse
+  names the file and the syntax error. Every CLI failure — config, septic build,
+  poops compile — now prints its message and exits 1, without the stack on top.
 - **`dev` rebuilt forever.** The build writes form partials and bridged markup
   *into* the watched markup tree — the scaffolded config puts forms in
   `src/markup/_partials` — so every build's own output triggered the next
