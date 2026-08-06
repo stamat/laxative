@@ -87,7 +87,7 @@ Run this checklist before writing any code; stop at the first "no".
 
 ## Non-obvious
 
-- `septic` comes from **npm** (`^2.0.0`), pinned by the lockfile — so a septic
+- `septic` comes from **npm** (`^3.0.0`), pinned by the lockfile — so a septic
   fix does not reach laxative until septic publishes and the lockfile is
   refreshed. It pulls septic's native deps: better-sqlite3 and sharp.
 - The one-origin trick: `createServer(config.septic)` returns an Express app with

@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "express": "^5.2.1",
-    "septic": "^2.0.0"
+    "septic": "^3.0.0"
   },
   "peerDependencies": {
     "poops": "*"

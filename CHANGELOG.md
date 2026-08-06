@@ -28,17 +28,25 @@ On `script/publish`, `script/changelog` cuts this section into a released entry
 in the same commit as the version bump, and the entry becomes the body of the
 GitHub release verbatim.
 
-## [Unreleased]
+## [Unreleased] — septic 3.0.0
 
-### Fixed
+### Changed
 
-- **The npm publish could never succeed.** `package.json` carried no
-  `repository`, and trusted publishing signs a provenance statement naming the
-  repository it built from — so the registry rejected every upload with
-  `422 … "repository.url" is "", expected to match
-  "https://github.com/stamat/laxative"`. Both 1.0.0 and 1.0.1 failed on it;
-  1.0.0 reached npm only because it was pushed by hand, without provenance.
-  `repository`, `bugs` and `homepage` are now set, matching septic's.
+- **septic moves to `^3.0.0`.** It brings `createStore`, the data layer under
+  the REST API: an application with its own routes — an admin panel, a CMS —
+  can now reach septic's tables directly, with the same access rules and field
+  shaping the API applies, instead of calling its own API over localhost.
+  laxative does not use it (it conducts, it does not query), but anything built
+  on top of a laxative project can.
+
+  Underneath it, septic took express 5, better-sqlite3 13 and js-yaml 5. Only
+  the first is visible from here, and laxative was already on express 5, so the
+  two share a single deduped copy rather than mounting one major inside another.
+
+  It also carries septic's move off `js-yaml@5.2.1`, which sat inside
+  [GHSA-pm4m-ph32-ghv5](https://github.com/advisories/GHSA-pm4m-ph32-ghv5) — a
+  parsing denial of service septic never reached (it only ever writes YAML), but
+  one `npm audit` reported to anyone with laxative in their tree.
 
 ## [1.0.1] - 2026-08-06 — septic 2.0.0, and the fixes it carries
 
@@ -68,6 +76,16 @@ holes septic had already closed but could not deliver through that range.
   watcher ignoring events under the config's `into` dirs — stays, because it is
   what makes a first build safe before septic's diffing has anything to compare
   against.
+
+### Fixed
+
+- **The npm publish could never succeed.** `package.json` carried no
+  `repository`, and trusted publishing signs a provenance statement naming the
+  repository it built from — so the registry rejected every upload with
+  `422 … "repository.url" is "", expected to match
+  "https://github.com/stamat/laxative"`. 1.0.0 reached npm only because it was
+  pushed by hand, without provenance; this is the change that let 1.0.1 publish
+  itself. `repository`, `bugs` and `homepage` are now set, matching septic's.
 
 ## [1.0.0] - 2026-08-06
 
