@@ -1,6 +1,6 @@
 {
   "name": "laxative",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "💊 One config, whole stack: laxative conducts poops (frontend) and septic (backend) into a single MVP.",
   "type": "module",
   "repository": {
