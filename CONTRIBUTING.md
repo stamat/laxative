@@ -32,6 +32,7 @@ script/bootstrap
 ```bash
 script/test      # run the tests (node --test)
 script/lint      # run the linter (neostandard; CI runs it)
+script/build     # build the docs site — the only artifact this repo produces
 ```
 
 There is no `script/server`, because the repo is not an app: laxative needs a
@@ -70,18 +71,19 @@ Commit messages are freeform; write something that says what changed.
 
 ## How a release works
 
-Bump the version in `package.json`, move `## [Unreleased]` in the changelog into
-a new `## [x.y.z]` section, commit, then tag `vx.y.z` and push the tag. Pushing
-the tag triggers [publish.yml](.github/workflows/publish.yml), which creates the
-GitHub Release with that changelog section as its body.
+Maintainer flow, recorded here so the automation isn't a mystery:
 
-Publishing to npm is gated on the `NPM_PUBLISH` repository variable, which is
-not set yet: laxative installs from git for now (septic is on npm since 1.0.0).
-Set it to `true` once an npm trusted publisher exists for the package, and the
-same workflow starts publishing.
+```bash
+script/publish          # or: script/publish 2.1.0
+```
 
-The first npm release carries a doc chore with it: every install line flips
-from `npm i -D poops stamat/laxative` to `npm i -D poops laxative` — in the
-README, the docs site (index, quickstart, both how-tos), the line
-`laxative init` prints when it finishes, and the git-install note in
-AGENTS.md.
+It reads the current version off the last `v*` tag and offers the patch bump,
+then runs `script/version` (`npm version`, no tag), `script/changelog` (cuts
+`## [Unreleased]` into a dated entry and leaves it in the temp directory),
+commits, runs `script/build`, commits that, tags and pushes. It then offers to
+open the GitHub release with that changelog entry as the body — which is why the
+release is created from here and not from the workflow.
+
+Pushing the tag triggers [publish.yml](.github/workflows/publish.yml), which
+publishes to npm over trusted publishing: OIDC, no token stored anywhere, and
+the tarball gets a provenance attestation.

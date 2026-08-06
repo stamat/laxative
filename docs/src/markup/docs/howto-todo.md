@@ -13,7 +13,7 @@ A complete todo app: a static page that lists, adds and toggles todos, backed by
 
 ```sh
 mkdir todo && cd todo && npm init -y
-npm i -D poops stamat/laxative
+npm i -D poops laxative
 ```
 
 ## 2. One config

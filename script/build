@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Build the docs site. That is the whole build: laxative ships as source, so the
+# package itself has nothing to compile — CI runs this to catch a docs site that
+# stopped building, which otherwise only surfaces on a push to main.
+#
+# Arguments pass through to poops; pages.yml uses that for --base-url.
+
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+npm run docs:build -- "$@"

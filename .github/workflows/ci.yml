@@ -35,3 +35,5 @@ jobs:
         run: script/lint
       - name: Test
         run: script/test
+      - name: Build
+        run: script/build

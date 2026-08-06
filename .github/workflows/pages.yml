@@ -28,9 +28,9 @@ jobs:
         with:
           node-version: 24
       - name: Install dependencies
-        run: npm install
+        run: script/bootstrap
       - name: Build docs
-        run: npm run docs:build -- --base-url /${{ github.event.repository.name }}
+        run: script/build --base-url /${{ github.event.repository.name }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:

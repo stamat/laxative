@@ -13,7 +13,7 @@ Write posts in a form, publish a static site — the whole loop from one `poops.
 
 ```sh
 mkdir blog && cd blog && npm init -y
-npm i -D poops stamat/laxative
+npm i -D poops laxative
 ```
 
 ## 2. One config

@@ -2,6 +2,32 @@
 
 All notable changes to laxative are recorded here. [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) + [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## Contributing an entry
+
+Write your change under `## [Unreleased]`, grouped under `### Added`,
+`### Changed`, `### Fixed`, `### Deprecated`, `### Removed` or `### Security`.
+Give the heading a short title after an em dash and open with one paragraph
+saying what was wrong before:
+
+````markdown
+## [Unreleased] — timeouts are configurable
+
+Every request used the same hardcoded thirty seconds, which is too long for a
+health check and too short for an upload.
+
+### Added
+
+- ...
+````
+
+Write it for the person upgrading, not for the person who wrote the code. What
+they need is what changed for them: a renamed option, a different default, an
+error that is now thrown, output that moved.
+
+On `script/publish`, `script/changelog` cuts this section into a released entry
+in the same commit as the version bump, and the entry becomes the body of the
+GitHub release verbatim.
+
 ## [Unreleased]
 
 ### Added
@@ -10,12 +36,21 @@ All notable changes to laxative are recorded here. [Keep a Changelog](https://ke
   (including what laxative refuses to become — if poops or septic could do it,
   it belongs there), `CODE_OF_CONDUCT.md`, `SECURITY.md`, issue forms and a pull
   request template.
-- `script/bootstrap`, `script/test`, `script/lint` — the same three entry points
-  every repo here answers to, and what CI now runs. There is deliberately no
-  `script/server`: this repo has no `poops.json` to conduct.
-- `.github/workflows/publish.yml` — a `v*` tag now cuts a GitHub Release with the
-  changelog section as its body. npm publishing stays gated on the
-  `NPM_PUBLISH` repository variable until a trusted publisher exists.
+- `script/bootstrap`, `script/test`, `script/lint`, `script/build`,
+  `script/publish` (with `script/version` and `script/changelog` behind it) — the
+  entry points every repo here answers to, and what CI now runs. There is
+  deliberately no `script/server`: this repo has no `poops.json` to conduct.
+  `script/build` builds the docs site, which is the only artifact this repo
+  produces — CI runs it, so a docs site that stopped compiling now fails the
+  pull request instead of the Pages deploy.
+- `.github/workflows/publish.yml` — a `v*` tag now publishes to npm over trusted
+  publishing (OIDC, no stored token, provenance attestation). The GitHub Release
+  is `script/publish`'s job, since it holds the changelog entry
+  `script/changelog` just cut.
+- `CLAUDE.md` and `.github/copilot-instructions.md` are symlinks to `AGENTS.md` —
+  one file, every tool. `AGENTS.md` gained the sections it was missing: how the
+  docs are built and deployed, the always / ask-first / never boundaries, and the
+  checklist that runs before a feature is written.
 - Docs site (`docs/`, poops + poops-docs-theme) deployed to GitHub Pages via
   `.github/workflows/pages.yml`.
 - The docs now say what laxative actually reads and does: the three config keys
@@ -33,8 +68,12 @@ All notable changes to laxative are recorded here. [Keep a Changelog](https://ke
 
 - **septic now installs from npm** (`^1.0.0`) instead of git — it launched, so
   the git pin and every doc sentence claiming "neither is on npm yet" went with
-  it. laxative itself still installs from git (`stamat/laxative`) until its own
-  trusted publisher exists.
+  it.
+- **laxative installs from npm too**, so the install line is
+  `npm i -D poops laxative` — in the README, the docs site (index, quickstart,
+  both how-tos) and the line `laxative init` prints when it finishes. The
+  `NPM_PUBLISH` gate that held publishing back until a trusted publisher existed
+  is gone with it.
 
 ### Fixed
 
@@ -65,10 +104,10 @@ All notable changes to laxative are recorded here. [Keep a Changelog](https://ke
 - An invalid `PORT` (`PORT=abc`) fell back to 3000 silently; it now warns
   before doing so.
 - **The install line was wrong twice.** It said `npm i septic`, but septic is
-  laxative's own dependency and isn't on npm; and it pulled `poops-docs-theme`,
-  which this repo's docs site needs and an app being scaffolded never does. It
-  is now `npm i -D poops stamat/laxative`, in the docs **and** in the line
-  `laxative init` prints when it finishes.
+  laxative's own dependency you never install yourself; and it pulled
+  `poops-docs-theme`, which this repo's docs site needs and an app being
+  scaffolded never does. It is now `npm i -D poops laxative`, in the docs **and**
+  in the line `laxative init` prints when it finishes.
 - The link to septic's how-to 404'd — those pages answer without a trailing
   slash.
 - The lockfile pinned an older septic commit than the one whose features the
