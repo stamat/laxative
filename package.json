@@ -44,7 +44,7 @@
     "eslint": "^9.39.3",
     "neostandard": "^0.13.0",
     "poops": "^2.0.0",
-    "poops-docs-theme": "^2.0.0"
+    "poops-docs-theme": "^3.0.1"
   },
   "keywords": [
     "poops",
