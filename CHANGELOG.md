@@ -29,6 +29,13 @@ All notable changes to laxative are recorded here. [Keep a Changelog](https://ke
   keeps serving.
 - The organ table shared with septic's docs, so the three sites tell one story.
 
+### Changed
+
+- **septic now installs from npm** (`^1.0.0`) instead of git — it launched, so
+  the git pin and every doc sentence claiming "neither is on npm yet" went with
+  it. laxative itself still installs from git (`stamat/laxative`) until its own
+  trusted publisher exists.
+
 ### Fixed
 
 - **`dev` rebuilt forever.** The build writes form partials and bridged markup

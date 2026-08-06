@@ -76,6 +76,6 @@ the tag triggers [publish.yml](.github/workflows/publish.yml), which creates the
 GitHub Release with that changelog section as its body.
 
 Publishing to npm is gated on the `NPM_PUBLISH` repository variable, which is
-not set yet: laxative and septic both install from git for now. Set it to
-`true` once an npm trusted publisher exists for the package, and the same
-workflow starts publishing.
+not set yet: laxative installs from git for now (septic is on npm since 1.0.0).
+Set it to `true` once an npm trusted publisher exists for the package, and the
+same workflow starts publishing.

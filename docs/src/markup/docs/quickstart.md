@@ -15,7 +15,7 @@ npx laxative init      # writes poops.json (poops + septic + a form) + src/marku
 npx laxative dev       # http://localhost:3000 — site + /api, one origin
 ```
 
-[septic](https://stamat.info/septic) arrives as laxative's own dependency — you never install it separately. Neither package is on npm yet, so both come from git; poops stays a peer you install yourself.
+[septic](https://stamat.info/septic) arrives as laxative's own dependency — you never install it separately, and since 1.0.0 it comes from npm. laxative itself isn't there yet, so it comes from git; poops stays a peer you install yourself.
 
 `laxative init` scaffolds a `poops.json` with:
 

@@ -18,7 +18,7 @@ laxative build     # septic build → poops compile → dist/
 laxative serve     # production: dist/ + /api + /uploads, one process
 ```
 
-septic rides along as laxative's dependency; neither is on npm yet, so both come from git.
+septic rides along as laxative's dependency, from npm since 1.0.0; laxative itself still comes from git.
 
 Define a resource once → table + API + form + page. Define `messages` → a working, validated contact form on a static page, wired to its own endpoint.
 

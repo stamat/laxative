@@ -23,7 +23,7 @@ laxative build     # septic build (DB → markup + forms) → poops compile → 
 laxative serve     # production: serve dist/ + /api + /uploads from one process
 ```
 
-septic comes along as laxative's own dependency — you never install it separately. Neither is on npm yet (tags cut a GitHub Release; an npm trusted publisher is pending), so both install from git. poops is an optional peer you install yourself; `PORT` overrides the default 3000.
+septic comes along as laxative's own dependency — you never install it separately, and since 1.0.0 it comes from npm. laxative itself isn't there yet (its trusted publisher is pending), so it installs from git. poops is an optional peer you install yourself; `PORT` overrides the default 3000.
 
 Full reference: [stamat.info/laxative](https://stamat.info/laxative/).
 

@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "express": "^4.21.0",
-    "septic": "github:stamat/septic"
+    "septic": "^1.0.0"
   },
   "peerDependencies": {
     "poops": "*"
