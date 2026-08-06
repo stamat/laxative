@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { load } from '../lib/config.js'
-import { createApp, buildOnce, watchAndRebuild, init } from '../lib/laxative.js'
+import { createApp, buildOnce, conductDev, watchAndRebuild, init } from '../lib/laxative.js'
 
 const [cmd] = process.argv.slice(2)
 const envPort = Number(process.env.PORT)
@@ -21,10 +21,15 @@ try {
     app.listen(port, () => console.log(`💊 laxative serving on http://localhost:${port}`))
   } else if (cmd === 'dev') {
     const config = load()
-    await buildOnce(config)
-    const { app } = createApp(config)
-    app.listen(port, () => console.log(`💊 laxative dev on http://localhost:${port} — site + /api, one origin`))
-    watchAndRebuild(config)
+    const conducted = await conductDev(config)
+    if (conducted) {
+      conducted.app.listen(port, () => console.log(`💊 laxative dev on http://localhost:${port} — site + /api, one origin, poops watching behind`))
+    } else {
+      await buildOnce(config)
+      const { app } = createApp(config)
+      app.listen(port, () => console.log(`💊 laxative dev on http://localhost:${port} — site + /api, one origin`))
+      watchAndRebuild(config)
+    }
   } else {
     console.log('Usage: laxative <init|dev|build|serve>')
     process.exit(cmd ? 1 : 0)

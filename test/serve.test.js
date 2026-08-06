@@ -75,6 +75,20 @@ test('init scaffolds a poops.json with both frontend and backend', () => {
   assert.ok(cfg.septic.build.forms.messages)
 })
 
+test('the scaffold wires the whole dev loop: style and script entries exist, the page loads them, poops can serve', () => {
+  const dir = path.join(PROJ, 'scaffold-dev')
+  mkdirSync(dir, { recursive: true })
+  init(dir)
+  const cfg = JSON.parse(readFileSync(path.join(dir, 'poops.json'), 'utf8'))
+  assert.ok(cfg.serve && cfg.watch && cfg.livereload, 'without serve+watch+livereload, dev falls back to markup watch only')
+  const page = readFileSync(path.join(dir, 'src/markup/index.html'), 'utf8')
+  for (const entry of [...cfg.styles, ...cfg.scripts]) {
+    assert.ok(existsSync(path.join(dir, entry.in)), `${entry.in} is in the config and not on disk — the first build fails`)
+    const served = '/' + path.relative('dist', entry.out).split(path.sep).join('/')
+    assert.ok(page.includes(served), `the page never loads ${served} — the entry builds into a file nothing links`)
+  }
+})
+
 test('the scaffolded page includes the generated form, and the config makes that include resolve', () => {
   const dir = path.join(PROJ, 'scaffold-form')
   mkdirSync(dir, { recursive: true })

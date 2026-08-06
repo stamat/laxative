@@ -17,8 +17,8 @@ They already share `poops.json`. What was missing: running them as **one thing**
 
 ```sh
 npm i -D poops laxative
-laxative init      # scaffold poops.json (poops + septic + a form) + the page carrying it
-laxative dev       # build once, then serve site + /api on one origin, rebuild on change
+laxative init      # scaffold poops.json (markup + styles + scripts + septic + a form) + the pages
+laxative dev       # site + /api on one origin; poops watches + live-reloads behind it
 laxative build     # septic build (DB → markup + forms) → poops compile → dist/
 laxative serve     # production: serve dist/ + /api + /uploads from one process
 ```

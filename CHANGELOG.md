@@ -28,7 +28,33 @@ On `script/publish`, `script/changelog` cuts this section into a released entry
 in the same commit as the version bump, and the entry becomes the body of the
 GitHub release verbatim.
 
-## [Unreleased]
+## [Unreleased] — dev conducts poops
+
+`laxative dev` watched `markup.in` with its own `fs.watch` and nothing else: a
+style or script edit changed nothing until a manual rebuild, and the browser
+was never told. That was the conductor reimplementing the one thing poops
+already does better.
+
+### Changed
+
+- **`dev` hands the loop to poops.** With poops installed and a `serve` block in
+  the config, septic emits its markup and forms once, then the poops CLI runs
+  behind laxative — building, watching every `in` in the config, live-reloading
+  the browser — and laxative proxies every route septic did not claim to it.
+  One visible origin, poops's dev loop intact behind it. Without poops or
+  without `serve`, `dev` falls back to the old markup-only watch and says so.
+- **`init` scaffolds the whole pipeline.** `styles` and `scripts` entries with
+  near-empty entry points, top-level `includePaths: ["node_modules"]` so
+  `@use "some-package"` resolves, and `watch` + `serve` + `livereload` so the
+  first `laxative dev` conducts. The scaffolded page links the built CSS and JS.
+
+### Added
+
+- **laxative vouches for the `septic` config key.** poops warns about top-level
+  keys it does not know unless a package by that name is declared — but a
+  laxative app declares `laxative`, not `septic`. The manifest now carries
+  `"poops": { "companionKeys": ["septic"] }`, which poops (from the release
+  after 2.1.0) reads from direct dependencies; the warning on every build goes.
 
 ## [1.1.0] - 2026-08-06 — septic 3.0.0
 

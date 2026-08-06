@@ -13,7 +13,7 @@ It's a **conductor, not an engine.** poops bundles and renders; septic serves th
 ```sh
 npm i -D poops laxative
 laxative init      # scaffold a full-stack poops.json + a starter page
-laxative dev       # site + /api on one origin, rebuild on change
+laxative dev       # site + /api on one origin; poops watches + live-reloads behind it
 laxative build     # septic build → poops compile → dist/
 laxative serve     # production: dist/ + /api + /uploads, one process
 ```

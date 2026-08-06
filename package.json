@@ -28,6 +28,9 @@
   "engines": {
     "node": ">=22"
   },
+  "poops": {
+    "companionKeys": ["septic"]
+  },
   "scripts": {
     "dev": "node bin/laxative.js dev",
     "serve": "node bin/laxative.js serve",

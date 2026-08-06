@@ -31,15 +31,14 @@ Order matters and is not arbitrary: septic's routes mount **first**, the static 
 
 ## What `dev` watches
 
-`laxative dev` builds once, starts the server, then watches `markup.in` recursively and runs the whole build again 300 ms after the last change — poops is fast enough that a partial rebuild would be complexity for nothing.
+With poops installed and a `serve` block in the config — `init` scaffolds both — `laxative dev` conducts the whole loop: septic emits its markup and forms once, then the **poops CLI** runs behind laxative — building, watching every `in` in the config (markup, styles, scripts), serving the site and live-reloading the browser. laxative proxies every route septic did not claim to it, so the one visible origin stays laxative's port and the livereload client poops injects rides along. Style edits hot-swap the stylesheet without a page load; everything else reloads the page.
 
-Three things follow, and the first one surprises people:
+Two limits stay, and they are the same ones a bare poops session has:
 
-- **No live reload.** The browser is never told; refresh to see the change.
-- **Only `markup.in` is watched.** Editing `poops.json`, or writing rows through the API, changes nothing on disk that the watcher sees — restart `dev` (or re-run `laxative build`) to pick those up.
-- **A failed rebuild is logged, not fatal.** The server keeps serving the last good `dist/`.
+- **Editing `poops.json`, or writing rows through the API, changes nothing the watcher sees** — restart `dev` (or re-run `laxative build`) to pick those up.
+- **A failed rebuild is logged, not fatal.** The server keeps serving the last good build.
 
-If poops isn't installed, `build` still emits septic's markup and forms and says so — poops is an optional peer, and laxative degrades to the half it can still do.
+Without a `serve` block, or without poops installed, `dev` falls back to the old loop and says so: build once, watch `markup.in` recursively, rerun the whole build 300 ms after the last change — no livereload, refresh to see it. `build` without poops still emits septic's markup and forms — poops is an optional peer, and laxative degrades to the half it can still do.
 
 ## The whole loop
 
