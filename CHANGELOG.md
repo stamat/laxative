@@ -50,6 +50,11 @@ GitHub release verbatim.
   parsing denial of service septic never reached (it only ever writes YAML), but
   one `npm audit` reported to anyone with laxative in their tree.
 
+- **`build-deploy` timed out waiting for GitHub Pages to finish publishing.**
+  `actions/deploy-pages` defaults to a 10-minute timeout; when GitHub Pages
+  infrastructure is slow the deployment stays in `deployment_in_progress` past
+  that limit and the workflow fails. The timeout is now raised to 30 minutes.
+
 ## [1.0.1] - 2026-08-06 — septic 2.0.0, and the fixes it carries
 
 laxative 1.0.0 shipped pinned to `septic@^1.0.0`, so every install kept a set of
