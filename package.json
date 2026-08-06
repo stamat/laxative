@@ -3,6 +3,14 @@
   "version": "1.0.1",
   "description": "💊 One config, whole stack: laxative conducts poops (frontend) and septic (backend) into a single MVP.",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stamat/laxative.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stamat/laxative/issues"
+  },
+  "homepage": "https://github.com/stamat/laxative#readme",
   "bin": {
     "laxative": "bin/laxative.js",
     "💊": "bin/laxative.js"

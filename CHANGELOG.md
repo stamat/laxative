@@ -30,6 +30,16 @@ GitHub release verbatim.
 
 ## [Unreleased]
 
+### Fixed
+
+- **The npm publish could never succeed.** `package.json` carried no
+  `repository`, and trusted publishing signs a provenance statement naming the
+  repository it built from — so the registry rejected every upload with
+  `422 … "repository.url" is "", expected to match
+  "https://github.com/stamat/laxative"`. Both 1.0.0 and 1.0.1 failed on it;
+  1.0.0 reached npm only because it was pushed by hand, without provenance.
+  `repository`, `bugs` and `homepage` are now set, matching septic's.
+
 ## [1.0.1] - 2026-08-06 — septic 2.0.0, and the fixes it carries
 
 laxative 1.0.0 shipped pinned to `septic@^1.0.0`, so every install kept a set of
