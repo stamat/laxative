@@ -28,7 +28,34 @@ On `script/publish`, `script/changelog` cuts this section into a released entry
 in the same commit as the version bump, and the entry becomes the body of the
 GitHub release verbatim.
 
-## [Unreleased]
+## [Unreleased] — septic 2.0.0, and the fixes it carries
+
+laxative 1.0.0 shipped pinned to `septic@^1.0.0`, so every install kept a set of
+holes septic had already closed but could not deliver through that range.
+
+### Changed
+
+- **septic moves to `^2.0.0`.** What reaches you with it, all septic's:
+  a malformed `Cookie` header — any cookie on the domain — no longer 500s every
+  route; `?limit=-1` no longer reads as "no limit" and dumps a whole table past
+  the documented cap of 200; an uploaded `.html`/`.svg`/`.js` is stored
+  extension-less and served as a download rather than executing as your site;
+  a `slug` naming a plain text field can no longer write outside its emit
+  directory via `../`; and a read returns only the `id` and the fields your
+  config declares, so an undeclared column — `password_hash` on a `users` table
+  being the case that mattered — stops riding along in responses.
+
+  **Upgrading:** two of those change behaviour you may have leaned on. If you
+  relied on undeclared columns appearing in API responses, declare them; if you
+  use `?expand=`, the referenced resource now has to be one your config serves
+  and the caller has to pass its own `access.read`.
+
+- `dev`'s rebuild loop gets quieter for free: septic 2.0.0 writes a markup file
+  or form partial only when its content differs, where it used to clear each
+  emit dir and rewrite everything on every build. laxative's own guard — the
+  watcher ignoring events under the config's `into` dirs — stays, because it is
+  what makes a first build safe before septic's diffing has anything to compare
+  against.
 
 ## [1.0.0] - 2026-08-06
 
