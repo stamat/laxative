@@ -31,6 +31,11 @@ All notable changes to laxative are recorded here. [Keep a Changelog](https://ke
 
 ### Fixed
 
+- **`dev` rebuilt forever.** The build writes form partials and bridged markup
+  *into* the watched markup tree — the scaffolded config puts forms in
+  `src/markup/_partials` — so every build's own output triggered the next
+  build, 300ms apart, poops compile included. The watcher now ignores events
+  under the config's `into` dirs.
 - **The install line was wrong twice.** It said `npm i septic`, but septic is
   laxative's own dependency and isn't on npm; and it pulled `poops-docs-theme`,
   which this repo's docs site needs and an app being scaffolded never does. It
