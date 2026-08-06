@@ -39,6 +39,8 @@ All notable changes to laxative are recorded here. [Keep a Changelog](https://ke
 - `dev` crashed right after a successful first build when the `markup.in` dir
   didn't exist yet (`fs.watch` throws on a missing path); it now says so and
   serves without watching.
+- An invalid `PORT` (`PORT=abc`) fell back to 3000 silently; it now warns
+  before doing so.
 - **The install line was wrong twice.** It said `npm i septic`, but septic is
   laxative's own dependency and isn't on npm; and it pulled `poops-docs-theme`,
   which this repo's docs site needs and an app being scaffolded never does. It

@@ -3,7 +3,9 @@ import { load } from '../lib/config.js'
 import { createApp, buildOnce, watchAndRebuild, init } from '../lib/laxative.js'
 
 const [cmd] = process.argv.slice(2)
-const port = Number(process.env.PORT) || 3000
+const envPort = Number(process.env.PORT)
+const port = Number.isInteger(envPort) && envPort > 0 ? envPort : 3000
+if (process.env.PORT && port !== envPort) console.warn(`💊 PORT="${process.env.PORT}" is not a port — using ${port}`)
 
 if (cmd === 'init') {
   init(process.cwd())
