@@ -28,7 +28,9 @@ On `script/publish`, `script/changelog` cuts this section into a released entry
 in the same commit as the version bump, and the entry becomes the body of the
 GitHub release verbatim.
 
-## [Unreleased] — septic 2.0.0, and the fixes it carries
+## [Unreleased]
+
+## [1.0.1] - 2026-08-06 — septic 2.0.0, and the fixes it carries
 
 laxative 1.0.0 shipped pinned to `septic@^1.0.0`, so every install kept a set of
 holes septic had already closed but could not deliver through that range.
