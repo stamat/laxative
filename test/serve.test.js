@@ -6,7 +6,8 @@ import { load } from '../lib/config.js'
 import { createApp, init } from '../lib/laxative.js'
 
 // The whole point of laxative: the poops-built site and septic's API on ONE
-// origin. Build a tiny project, boot createApp, and hit both over the same host.
+// origin. Build a tiny project, boot createApp, and hit both over the same
+// host — plus the degraded case, a frontend-only project with no septic block.
 const PROJ = new URL('./tmp-proj/', import.meta.url).pathname
 const wipe = () => rmSync(PROJ, { recursive: true, force: true })
 
@@ -43,6 +44,26 @@ test('septic API is on the same origin', async() => {
   const list = await (await fetch(`${base}/api/notes`)).json()
   assert.equal(list.length, 1)
   assert.equal(list[0].text, 'hi')
+})
+
+test('a frontend-only project (no septic block) still serves the site, and mounts no API', async() => {
+  const dir = path.join(PROJ, 'frontend-only')
+  mkdirSync(path.join(dir, 'dist'), { recursive: true })
+  writeFileSync(path.join(dir, 'poops.json'), JSON.stringify({ markup: { out: 'dist' } }))
+  writeFileSync(path.join(dir, 'dist/index.html'), '<!doctype html><title>fo</title><h1>frontend only</h1>')
+
+  const { app, db: noDb } = createApp(load(dir))
+  assert.equal(noDb, undefined, 'a project without a septic block opened a database')
+  const srv = await new Promise((resolve) => { const s = app.listen(0, () => resolve(s)) })
+  try {
+    const origin = `http://localhost:${srv.address().port}`
+    const page = await fetch(`${origin}/`)
+    assert.equal(page.status, 200)
+    assert.match(await page.text(), /frontend only/)
+    assert.equal((await fetch(`${origin}/api/notes`)).status, 404, 'an API answered on a frontend-only project')
+  } finally {
+    srv.close()
+  }
 })
 
 test('init scaffolds a poops.json with both frontend and backend', () => {
