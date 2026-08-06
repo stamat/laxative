@@ -10,9 +10,12 @@ permissions:
   pages: write
   id-token: write
 
+# Never cancel a deployment in flight: killing deploy-pages mid-run leaves the
+# deployment queued on GitHub's side, and the next run then sits in
+# `deployment_queued` until it times out. Queued runs are skipped instead.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build-deploy:
