@@ -23,7 +23,9 @@ laxative build     # septic build (DB → markup + forms) → poops compile → 
 laxative serve     # production: serve dist/ + /api + /uploads from one process
 ```
 
-septic comes along as laxative's own dependency — you never install it separately. poops is an optional peer you install yourself; `PORT` overrides the default 3000.
+Every command takes `-c <path>` (a config file other than `poops.json`), `-p <number>` (the port, over `PORT` and the 3000 default) and `-q` (hide the info lines — warnings and errors still print), spelled the way poops spells them.
+
+septic comes along as laxative's own dependency — you never install it separately. poops is an optional peer you install yourself.
 
 Full reference: [stamat.info/laxative](https://stamat.info/laxative/).
 

@@ -199,7 +199,7 @@ Two details in there are the difference between working and nearly working:
 npx laxative dev      # http://localhost:3000 — page + /api, one origin
 ```
 
-Add a todo, tick it off. Every request hits `/api/todos` on the same host that served the page — that is the whole point of laxative. The `serve.port` in `poops.json` is poops' own server behind the curtain; laxative proxies it and puts everything on `3000` (`PORT` overrides).
+Add a todo, tick it off. Every request hits `/api/todos` on the same host that served the page — that is the whole point of laxative. The `serve.port` in `poops.json` is poops' own server behind the curtain; laxative proxies it and puts everything on `3000` (`-p` or `PORT` overrides).
 
 ## 7. Ship it
 

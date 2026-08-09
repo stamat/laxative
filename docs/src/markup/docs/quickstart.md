@@ -40,7 +40,19 @@ Run `laxative build` to produce `dist/` (static site + generated form partials),
 | `laxative build` | `septic build` (DB → markup + forms) → poops compile → `dist/` |
 | `laxative serve` | production: serve `dist/` + `/api` + `/uploads` from one process |
 
-`PORT` overrides the port for `dev` and `serve`; it defaults to 3000.
+### Flags
+
+Global — every command takes them, spelled the way [poops](https://github.com/stamat/poops) spells them, so one project running 💩 and 💊 has one set to remember.
+
+| Flag | What it does |
+|------|--------------|
+| `-c, --config <path>` | read that file instead of `poops.json`. The poops `dev` conducts is handed the same file, so both halves stay on one config |
+| `-p, --port <number>` | the port `dev` and `serve` listen on. Beats `PORT`, which beats the 3000 default. `0` asks the OS for a free port, and the one it bound is the one printed |
+| `-q, --quiet` | hide the 💊 info lines. Warnings and errors still print — a build that degraded still says so |
+| `-h, --help` | print the usage above |
+| `-v, --version` | print the version |
+
+A value that is not a port — `-p nope`, `-p 70000` — is named and refused rather than quietly serving 3000.
 
 ## What laxative reads
 

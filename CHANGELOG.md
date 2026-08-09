@@ -28,7 +28,12 @@ On `script/publish`, `script/changelog` cuts this section into a released entry
 in the same commit as the version bump, and the entry becomes the body of the
 GitHub release verbatim.
 
-## [Unreleased] — both how-tos are apps that were run
+## [Unreleased] — one config, one set of flags
+
+laxative had one way in and one way out: the command word, and a `PORT` env var
+poops does not share. A project keeping its config anywhere but `poops.json`
+could not be run at all, `PORT=nope` fell back to 3000 without saying so, and
+there was no `--help` to ask.
 
 Both how-tos were written from memory rather than from a running project. The
 todo one pulled Alpine off a CDN and told you to "add `_partials` to
@@ -36,6 +41,26 @@ todo one pulled Alpine off a CDN and told you to "add `_partials` to
 build at all: its layout could not resolve, and if it had, the post body would
 have rendered empty. Each page has now been run end to end and transcribed from
 what worked.
+
+### Added
+
+- **`-c`, `-p` and `-q` on every command, spelled the way poops spells them.**
+  `-c <path>` reads a config other than `poops.json` — and hands that same file
+  to the poops CLI `dev` conducts, so one config stays one config across both
+  halves. `-p <number>` beats `PORT`, which beats the 3000 default; `0` asks the
+  OS for a free port, and the port printed is the port bound, not the port
+  asked for. `-q` hides the 💊 info lines. `--help` and `--version` come with
+  them, off [argoyle](https://github.com/stamat/argoyle).
+
+### Changed
+
+- **A value that is not a port is refused out loud.** `-p nope` used to fall
+  back to 3000 in silence, and `PORT=70000` got as far as
+  `ERR_SOCKET_BAD_PORT`. Both are now quoted back with the port used instead.
+- **The lines explaining a degraded run moved to stderr** — no `serve` block for
+  poops, a missing `markup.in`, an `init` that found a `poops.json` already
+  there. `-q` does not hide them: a run that lost livereload says so even when
+  asked to be quiet. The `init` one is now prefixed `💊` like the rest.
 
 ### Fixed
 
