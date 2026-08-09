@@ -20,7 +20,11 @@ npm i -D poops laxative
 
 ```json
 {
-  "markup": { "in": "src/markup", "out": "dist" },
+  "markup": {
+    "in": "src/markup",
+    "out": "dist",
+    "options": { "includePaths": ["_layouts", "_partials"] }
+  },
   "septic": {
     "db": "data/blog.db",
     "auth": { "seed": { "email": "you@example.com", "password": "changeme", "role": "admin" } },
@@ -42,17 +46,25 @@ npm i -D poops laxative
     },
     "build": {
       "resources": {
-        "posts": { "into": "src/markup/posts", "slug": "slug", "body": "body", "layout": "post.html", "where": { "status": "published" } }
+        "posts": { "into": "src/markup/posts", "slug": "slug", "body": "body", "layout": "post", "where": { "status": "published" } }
       },
       "forms": {
         "posts": { "into": "src/markup/_partials", "submitLabel": "Publish" }
       }
     }
-  }
+  },
+  "watch": true,
+  "serve": { "port": 4040 },
+  "livereload": true
 }
 ```
 
-Three blocks, one file: the **schema + API** (`resources`), the **static build** (`build.resources`, published only), and the **author form** (`build.forms`).
+Three blocks, one file: the **schema + API** (`resources`), the **static build** (`build.resources`, published only), and the **author form** (`build.forms`). `watch` + `serve` + `livereload` are what let `laxative dev` hand the dev loop to poops; without a `serve` block it falls back to watching markup only, and says so.
+
+Two lines in there are the ones to get right:
+
+- **`includePaths: ["_layouts", "_partials"]`** is the template engine's search path. poops skips `_`-prefixed directories when rendering pages, but will not search them for includes or layouts unless they are on the engine's paths — leave it out and neither the layout nor the generated form resolves.
+- **`"layout": "post"`, with no extension.** poops appends its own: front matter `layout: post` becomes `{% raw %}{% extends 'post.html' %}{% endraw %}`. Writing `post.html` there asks for `post.html.html`.
 
 ## 3. A post layout
 
@@ -66,13 +78,17 @@ Three blocks, one file: the **schema + API** (`resources`), the **static build**
 <body>
   <article>
     <h1>{{ page.title }}</h1>
-    <time>{{ page.published_at }}</time>
-    {{ content }}
+    <time datetime="{{ page.published_at | date('YYYY-MM-DDTHH:mm:ss') }}">{{ page.published_at | date('D MMMM YYYY') }}</time>
+    {% block content %}{% endblock %}
   </article>
   <p><a href="/">← all posts</a></p>
 </body></html>
 ```
 {% endraw %}
+
+{% raw %}`{% block content %}{% endblock %}` is where the post body lands — poops wraps each page's own source in that block and extends the layout, so `{{ content }}` is not a variable and renders nothing.{% endraw %} The `date` filter takes [dayjs](https://day.js.org/) tokens: septic stores `2026-08-05 12:00:00`, and a `<time datetime>` wants ISO 8601, so the machine-readable value and the human one are two different formats of one field.
+
+The layout owns the `<h1>` — write post bodies starting at `##`, or every post ships two top-level headings and no outline.
 
 An `src/markup/index.html` lists the `posts` collection (see [poops collections](https://stamat.info/poops/docs/)). The generated `_partials/posts-form.html` is your write/edit form — include it on an admin page.
 
@@ -88,7 +104,7 @@ Post to the API (or use the generated form) as the seeded admin:
 curl -c jar -X POST localhost:3000/api/_auth/login \
   -H 'content-type: application/json' -d '{"email":"you@example.com","password":"changeme"}'
 curl -b jar -X POST localhost:3000/api/posts -H 'content-type: application/json' \
-  -d '{"title":"Hello","slug":"hello","body":"# Hi","status":"published","published_at":"2026-08-05 12:00:00"}'
+  -d '{"title":"Hello","slug":"hello","body":"## Hi","status":"published","published_at":"2026-08-05 12:00:00"}'
 ```
 
 A draft is just `"status":"draft"` — it lives in the DB and never reaches the site until you flip it. `GET /api/posts/:id` as admin returns a prefilled edit form to do exactly that.
@@ -99,6 +115,8 @@ A draft is just `"status":"draft"` — it lives in the DB and never reaches the 
 npx laxative build    # published posts → markup → poops → dist/
 npx laxative serve    # serve dist/ + the /api (to keep writing) on one origin
 ```
+
+`build` writes one markdown file per published row into `src/markup/posts/` — every field as front matter, the `body` field as the document — then poops renders them. The draft never appears, in the markup tree or in `dist/`.
 
 Deploy `dist/` anywhere — it's plain HTML. Keep `laxative serve` running where you author; rebuild to publish.
 

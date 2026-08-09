@@ -28,7 +28,34 @@ On `script/publish`, `script/changelog` cuts this section into a released entry
 in the same commit as the version bump, and the entry becomes the body of the
 GitHub release verbatim.
 
-## [Unreleased]
+## [Unreleased] — both how-tos are apps that were run
+
+Both how-tos were written from memory rather than from a running project. The
+todo one pulled Alpine off a CDN and told you to "add `_partials` to
+`includePaths`" without saying which of the two it meant. The blog one did not
+build at all: its layout could not resolve, and if it had, the post body would
+have rendered empty. Each page has now been run end to end and transcribed from
+what worked.
+
+### Fixed
+
+- **[How-to: a todo app](https://stamat.github.io/laxative/docs/howto-todo)
+  is transcribed from a working app.** No CDN dependency; the generated no-JS
+  form comes first and the live list is the enhancement on top of it, which is
+  the order the code actually degrades in. It now states the three things that
+  bite: the two `includePaths` are different resolvers, `hints.done.exclude`
+  keeps the boolean off the form, and `success` must name a page that exists.
+  `PATCH` is documented as mounting alongside `PUT`, so it does not go in
+  `methods`.
+- **[How-to: a blog](https://stamat.github.io/laxative/docs/howto-blog) builds.**
+  Four things stopped it: `"layout": "post.html"` asked poops for
+  `post.html.html`, because poops appends the extension to a front-matter
+  layout; the layout printed `{{ content }}`, which is not a variable, so every
+  post rendered with no body; the config declared no `includePaths`, so neither
+  `_layouts` nor `_partials` was on the engine's search path; and with no
+  `serve` block `laxative dev` never handed the loop to poops. The `<time>` now
+  carries a machine-readable `datetime` beside the human date, and the page says
+  the layout owns the `<h1>` so post bodies start at `##`.
 
 ## [1.2.0] - 2026-08-09 — dev conducts poops
 
