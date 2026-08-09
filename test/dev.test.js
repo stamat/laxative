@@ -40,7 +40,7 @@ test('a proxy with nothing behind it says so with a 502, never a hang or a stack
   const dead = await listen(express())
   const port = dead.address().port
   await new Promise((resolve) => dead.close(resolve)) // a port that answers nothing
-  const front = await listen(express().use(proxyTo(port)))
+  const front = await listen(express().use(proxyTo(port, { retries: 1, delay: 50 })))
   try {
     const res = await fetch(`http://localhost:${front.address().port}/`)
     assert.equal(res.status, 502)

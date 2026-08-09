@@ -50,6 +50,11 @@ already does better.
 
 ### Added
 
+- **The dev proxy waits for poops's first build.** A page requested in the first
+  seconds of `laxative dev` met a proxy whose upstream had not started serving yet
+  and got a 502 mid-load. A refused GET/HEAD now retries briefly (bodied requests
+  still fail fast — their stream is already consumed); the answer arrives when
+  poops does.
 - **laxative vouches for the `septic` config key.** poops warns about top-level
   keys it does not know unless a package by that name is declared — but a
   laxative app declares `laxative`, not `septic`. The manifest now carries
