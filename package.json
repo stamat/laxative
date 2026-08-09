@@ -1,6 +1,6 @@
 {
   "name": "laxative",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "💊 One config, whole stack: laxative conducts poops (frontend) and septic (backend) into a single MVP.",
   "type": "module",
   "repository": {
@@ -29,7 +29,9 @@
     "node": ">=22"
   },
   "poops": {
-    "companionKeys": ["septic"]
+    "companionKeys": [
+      "septic"
+    ]
   },
   "scripts": {
     "dev": "node bin/laxative.js dev",

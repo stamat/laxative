@@ -28,7 +28,9 @@ On `script/publish`, `script/changelog` cuts this section into a released entry
 in the same commit as the version bump, and the entry becomes the body of the
 GitHub release verbatim.
 
-## [Unreleased] — dev conducts poops
+## [Unreleased]
+
+## [1.2.0] - 2026-08-09 — dev conducts poops
 
 `laxative dev` watched `markup.in` with its own `fs.watch` and nothing else: a
 style or script edit changed nothing until a manual rebuild, and the browser
