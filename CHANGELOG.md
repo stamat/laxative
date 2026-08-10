@@ -54,6 +54,13 @@ what worked.
 
 ### Changed
 
+- **The docs site searches.** `poops-docs-theme` 3.0.1 → 4.0.0, which puts a
+  field in the topbar of every docs page and filters the `search-index.json`
+  poops was already writing. Nothing in `docs/poops.json` changed — the config
+  shape and the `es2019` target are the same, and the theme brings
+  [book-of-elementals](https://github.com/stamat/book-of-elementals) with it.
+  A dev-dependency of this repo only: it builds the docs site, and is not part
+  of what laxative ships.
 - **A value that is not a port is refused out loud.** `-p nope` used to fall
   back to 3000 in silence, and `PORT=70000` got as far as
   `ERR_SOCKET_BAD_PORT`. Both are now quoted back with the port used instead.
